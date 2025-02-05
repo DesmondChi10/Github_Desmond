@@ -16,13 +16,13 @@ output:
       collapsed: true
       smooth_scroll: true
 
-bibliography: biblio2/biblio2.bib
-csl: "biblio2/isara-iso-690.csl"
+bibliography: biblio2/biblio2.bib.bib
+csl: biblio2/isara-iso-690.csl
 ---
 
 # Introduction
 
-La santé humaine dépend énormement du poids, mais aussi de la taille. L’indice de Masse Corporelle ou encore IMC, est calculé à partir de la taille et du poids selon la formule suivante : IMC = poids en kg/taille² (en m) . Il permet d’évaluer le statut pondéral. Selon l'OMS, un IMC normal doit se situer entre 18,5 à 24,9. Des valeurs supérieures ou inférieures à la normale peuvent parfois entraîner des risques pour la santé. L'IMC est très souvent négligé par plusieurs personnes qui ne sont pas au courant de sont existance et devrait être un premier facteur d'auto-évaluation médical. [@misc{noauthor_indice_2024]
+La santé humaine dépend énormement du poids, mais aussi de la taille. L’indice de Masse Corporelle ou encore IMC, est calculé à partir de la taille et du poids selon la formule suivante : IMC = poids en kg/taille² (en m) . Il permet d’évaluer le statut pondéral. Selon l'OMS, un IMC normal doit se situer entre 18,5 à 24,9. Des valeurs supérieures ou inférieures à la normale peuvent parfois entraîner des risques pour la santé. L'IMC est très souvent négligé par plusieurs personnes qui ne sont pas au courant de sont existance et devrait être un premier facteur d'auto-évaluation médical. [@guyomar_indice_2024]
 
 # Interpretation de l'IMC
 
@@ -36,19 +36,19 @@ Entre 25 et 29.9 : Excès de poids pouvant occasionner certains risques pour la 
 
 Plus de 30 : Obésité, risque accru de développer certaines maladies.
 
-Il s'agit là des mesures définies par l'Organisation Mondiale de la Santé (OMS).[@misc{noauthor_indice_2024]
+Il s'agit là des mesures définies par l'Organisation Mondiale de la Santé (OMS).[@guyomar_indice_2024]
 
 ## L'IMC de la femme
 
-La formule permettant de calculer l’IMC est la même pour les femmes et les hommes. Elle se base sur le rapport du poids sur la taille au carré, indépendament du sexe de la personne. Aussi, La coleur des cheveux n'affecte pas l'IMC [@misc{noauthor_heredite_nodate].
+La formule permettant de calculer l’IMC est la même pour les femmes et les hommes. Elle se base sur le rapport du poids sur la taille au carré, indépendament du sexe de la personne. Aussi, La coleur des cheveux n'affecte pas l'IMC [@ld_medical_heredite_2022].
 
-Les femmes ont tendance à voir leur indice de masse corporelle augmenter à la ménopause à cause du dérèglement hormonal qui lui est associé.[@misc{noauthor_indice_2024]
+Les femmes ont tendance à voir leur indice de masse corporelle augmenter à la ménopause à cause du dérèglement hormonal qui lui est associé.[@guyomar_indice_2024]
 
 ### Les limites de l'IMC
 
 L'IMC est une mesure approximative. Bien que calculer son IMC permet d'évaluer le poids de manière efficace, la mesure ne tient pas compte de certains paramètres.
 
-C'est notamment le cas de la masse musculaire, plus lourde que la masse graisseuse sans pour autant être mauvaise pour la santé. Une personne musclée peut obtenir des résultats similaires à une personne possédant quelques kilos en trop, pourtant leur corpulence est bien différente.[@misc{noauthor_heredite_nodate]
+C'est notamment le cas de la masse musculaire, plus lourde que la masse graisseuse sans pour autant être mauvaise pour la santé. Une personne musclée peut obtenir des résultats similaires à une personne possédant quelques kilos en trop, pourtant leur corpulence est bien différente.[@ld_medical_heredite_2022]
 
 De plus, l’IMC est à interpréter en fonction du contexte ou encore de l’âge. Un IMC élevé chez un sportif sera moins mauvais qu’un IMC normal chez quelqu’un de sédentaire. La masse musculaire révèlera un indice trop élevé mais le risque de maladies cardiovasculaires est en réalité bien moindre.
 
@@ -56,8 +56,13 @@ De plus, l’IMC est à interpréter en fonction du contexte ou encore de l’â
 
 Nous disposons des données des personnages rencontrés dans la cinéfiction "starwars".
 
-```{r imports, echo=TRUE, eval=TRUE}
-table <- read.table("Tablestarwars.R", header = TRUE, sep=";", )
+```{r imports, echo=FALSE, eval=TRUE, warning=FALSE}
+table <- read.table("Tablestarwars.R", header = TRUE, sep=";")
+
+library(dplyr)
+data("starwars")
+starwars
+
 ```
 
 # Analyses
@@ -66,13 +71,20 @@ Les données dont nous disposons ont étés évaluées afin de mieux comprendre 
 
 ## Relation Masse-taille
 
-```{r graph1, echo=TRUE, eval=TRUE, fig.height = 10, fig.width = 6, fig.align = "center", fig.cap="Graphe de masse-taille (gradient=IMC)"}
+```{r graph1, echo=TRUE, eval=TRUE, warning=FALSE, fig.height = 10, fig.width = 6, fig.align = "center", fig.cap="Graphe de masse-taille (gradient=IMC)"}
 
 library(dplyr)
 library(ggplot2)
 data ("starwars")
 starwars
-ggplot(starwars, aes(x = height, y = mass)) + geom_jitter(aes(fill = sex), width = 0.2, size = 3, alpha = 0.7, shape = 21) + scale_fill_manual(values = c("female" = "red", "male" = "blue")) + facet_grid(sex ~ .) + theme_grey() + geom_smooth (method= "lm", color="black")
+ggplot(starwars, aes(x = height, y = mass)) + 
+  geom_jitter(aes(fill = sex), 
+              width = 0.2, size = 3, 
+              alpha = 0.7, shape = 21) + 
+  scale_fill_manual(values = c("female" = "red", "male" = "blue")) + 
+  facet_grid(sex ~ .) + 
+  theme_grey() + 
+  geom_smooth (method= "lm", color="black")
 
 ```
 
