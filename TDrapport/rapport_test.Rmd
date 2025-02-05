@@ -1,0 +1,85 @@
+---
+title: "Rapport"
+author: "Desmond CHI A."
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: '3'
+  html_document:
+    code_folding: hide
+    fig_caption: true
+    number_sections: true
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+
+bibliography: biblio2/biblio2.bib
+csl: "biblio2/isara-iso-690.csl"
+---
+
+# Introduction
+
+La santé humaine dépend énormement du poids, mais aussi de la taille. L’indice de Masse Corporelle ou encore IMC, est calculé à partir de la taille et du poids selon la formule suivante : IMC = poids en kg/taille² (en m) . Il permet d’évaluer le statut pondéral. Selon l'OMS, un IMC normal doit se situer entre 18,5 à 24,9. Des valeurs supérieures ou inférieures à la normale peuvent parfois entraîner des risques pour la santé. L'IMC est très souvent négligé par plusieurs personnes qui ne sont pas au courant de sont existance et devrait être un premier facteur d'auto-évaluation médical. [@misc{noauthor_indice_2024]
+
+# Interpretation de l'IMC
+
+Voilà comment comprendre le calcul de votre IMC :
+
+Moins de 18.5 : Poids insuffisant et pouvant occasionner certains risques pour la santé.
+
+Entre 18.5 et 24.9 : Poids santé qui n'augmente pas les risques pour la santé.
+
+Entre 25 et 29.9 : Excès de poids pouvant occasionner certains risques pour la santé.
+
+Plus de 30 : Obésité, risque accru de développer certaines maladies.
+
+Il s'agit là des mesures définies par l'Organisation Mondiale de la Santé (OMS).[@misc{noauthor_indice_2024]
+
+## L'IMC de la femme
+
+La formule permettant de calculer l’IMC est la même pour les femmes et les hommes. Elle se base sur le rapport du poids sur la taille au carré, indépendament du sexe de la personne. Aussi, La coleur des cheveux n'affecte pas l'IMC [@misc{noauthor_heredite_nodate].
+
+Les femmes ont tendance à voir leur indice de masse corporelle augmenter à la ménopause à cause du dérèglement hormonal qui lui est associé.[@misc{noauthor_indice_2024]
+
+### Les limites de l'IMC
+
+L'IMC est une mesure approximative. Bien que calculer son IMC permet d'évaluer le poids de manière efficace, la mesure ne tient pas compte de certains paramètres.
+
+C'est notamment le cas de la masse musculaire, plus lourde que la masse graisseuse sans pour autant être mauvaise pour la santé. Une personne musclée peut obtenir des résultats similaires à une personne possédant quelques kilos en trop, pourtant leur corpulence est bien différente.[@misc{noauthor_heredite_nodate]
+
+De plus, l’IMC est à interpréter en fonction du contexte ou encore de l’âge. Un IMC élevé chez un sportif sera moins mauvais qu’un IMC normal chez quelqu’un de sédentaire. La masse musculaire révèlera un indice trop élevé mais le risque de maladies cardiovasculaires est en réalité bien moindre.
+
+# Les Données
+
+Nous disposons des données des personnages rencontrés dans la cinéfiction "starwars".
+
+```{r imports, echo=TRUE, eval=TRUE}
+table <- read.table("Tablestarwars.R", header = TRUE, sep=";", )
+```
+
+# Analyses
+
+Les données dont nous disposons ont étés évaluées afin de mieux comprendre les relation existantes entre ceux-ci. Ces analyses nous ont aussi permit de mettre en lumière la relation existante entre la masse et la taille.
+
+## Relation Masse-taille
+
+```{r graph1, echo=TRUE, eval=TRUE, fig.height = 10, fig.width = 6, fig.align = "center", fig.cap="Graphe de masse-taille (gradient=IMC)"}
+
+library(dplyr)
+library(ggplot2)
+data ("starwars")
+starwars
+ggplot(starwars, aes(x = height, y = mass)) + geom_jitter(aes(fill = sex), width = 0.2, size = 3, alpha = 0.7, shape = 21) + scale_fill_manual(values = c("female" = "red", "male" = "blue")) + facet_grid(sex ~ .) + theme_grey() + geom_smooth (method= "lm", color="black")
+
+```
+
+# Interpretation et conclusion
+
+D'après les graphes ci-dessus, il est constaté que la gradient du graphe masse-taille des hommes est positif. Ceci signifie que la relation entre la masse et la taille chez les homme est lineaire contrairement à ce qu'on observe chez les femmes. Ce qui signifie que chez les hommes l'IMC evolue dans le même sens que la masse et dans le sens inverse avec la taille. Chez les femmes on constate une constance.
+
+# Bibliographie
+
+
