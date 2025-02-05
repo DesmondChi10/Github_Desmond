@@ -8,10 +8,18 @@ head(starwars)
 install.packages("ggplot2")
 library(ggplot2)
 
-data <- starwars |> filter(!is.na(name) & !is.na(mass) & !is.na(eye_color))
+data <- starwars |> filter(!is.na(name) & !is.na(mass) & !is.na(eye_color) & !is.na(sex) & !is.na(hair_color))
 head(data)
-data2 <- data |> select(name, mass, eye_color) #Selectionner une partie des données à traiter
-ggplot(data2) + geom_histogram(aes(x = mass, color = eye_color)) #histogramme des masses différentié par les coleurs des yeux
+#Selectionner les données dont nous avons besoins pour notre histogram de masse selon les couleur de cheveux
+data2 <- data |> select(mass, sex, hair_color)
+ggplot(data2) + geom_histogram(aes(x = mass, fill = sex)) + theme_linedraw () + facet_grid (hair_color~.)
 
 #Boxplot des sexes et coleur des yeux différentier selon les couleurs des cheveux
-ggplot(data) + geom_boxplot(aes(x = sex, y = eye_color, fill = hair_color))
+ggplot(data) + geom_point(aes(x = height, y = mass)) + geom_jitter(aes(color = sex), width = 0.2, size = 3, alpha = 0.7, shape = 21) + scale_color_manual(values = c("feminine" = "red", "masculine" = "blue")) + facet_grid(sex~.)
+
+ggplot(data, aes(x = height, y = mass)) +
+  geom_jitter(aes(fill = sex), width = 0.2, size = 3, alpha = 0.7, shape = 21) +
+  scale_fill_manual(values = c("female" = "red", "male" = "blue")) +
+  facet_grid(sex ~ .) + theme_grey() + geom_smooth (method= "lm", color="black")
+
+  
