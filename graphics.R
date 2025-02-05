@@ -14,9 +14,7 @@ head(data)
 data2 <- data |> select(mass, sex, hair_color)
 ggplot(data2) + geom_histogram(aes(x = mass, fill = sex)) + theme_linedraw () + facet_grid (hair_color~.)
 
-#Boxplot des sexes et coleur des yeux différentier selon les couleurs des cheveux
-ggplot(data) + geom_point(aes(x = height, y = mass)) + geom_jitter(aes(color = sex), width = 0.2, size = 3, alpha = 0.7, shape = 21) + scale_color_manual(values = c("feminine" = "red", "masculine" = "blue")) + facet_grid(sex~.)
-
+#Graphe illustrant la relation existante entre la masse et la taille des différents personnages de starwars
 ggplot(data, aes(x = height, y = mass)) +
   geom_jitter(aes(fill = sex), width = 0.2, size = 3, alpha = 0.7, shape = 21) +
   scale_fill_manual(values = c("female" = "red", "male" = "blue")) +
