@@ -8,6 +8,7 @@ head(starwars)
 install.packages("ggplot2")
 library(ggplot2)
 
+<<<<<<< HEAD
 data <- starwars |> filter(!is.na(name) & !is.na(mass) & !is.na(eye_color) & !is.na(sex) & !is.na(hair_color))
 head(data)
 #Selectionner les données dont nous avons besoins pour notre histogram de masse selon les couleur de cheveux
@@ -20,4 +21,3 @@ ggplot(data, aes(x = height, y = mass)) +
   scale_fill_manual(values = c("female" = "red", "male" = "blue")) +
   facet_grid(sex ~ .) + theme_grey() + geom_smooth (method= "lm", color="black")
 
-  
